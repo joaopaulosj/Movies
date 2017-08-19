@@ -1,12 +1,11 @@
 package com.joaopaulosj.movies.di.module;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.joaopaulosj.movies.NetConstants;
 import com.joaopaulosj.movies.data.remote.MoviesProvider;
 import com.joaopaulosj.movies.data.remote.MoviesService;
-import com.joaopaulosj.movies.data.repository.MovieRepository;
+import com.joaopaulosj.movies.data.repository.MovieRepositoryImpl;
 
 import javax.inject.Singleton;
 
@@ -14,7 +13,6 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -51,8 +49,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    MovieRepository provideMovieRepository(MoviesProvider moviesProvider){
-        return new MovieRepository(moviesProvider);
+    MovieRepositoryImpl provideMovieRepository(MoviesProvider moviesProvider){
+        return new MovieRepositoryImpl(moviesProvider);
     }
 
 }

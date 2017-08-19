@@ -8,8 +8,7 @@ import android.arch.lifecycle.MutableLiveData;
 import com.joaopaulosj.movies.BaseApplication;
 import com.joaopaulosj.movies.data.models.Movie;
 import com.joaopaulosj.movies.data.models.MoviesResponse;
-import com.joaopaulosj.movies.data.repository.MovieRepository;
-import com.joaopaulosj.movies.di.component.ApplicationComponent;
+import com.joaopaulosj.movies.data.repository.MovieRepositoryImpl;
 
 import javax.inject.Inject;
 
@@ -20,7 +19,7 @@ import javax.inject.Inject;
 public class MainViewModel extends AndroidViewModel {
 
     @Inject
-    MovieRepository mRepository;
+    MovieRepositoryImpl mRepository;
 
     private LiveData<MoviesResponse<Movie>> mPopularMovies = new MutableLiveData<>();
     private LiveData<MoviesResponse<Movie>> mSearchMovies = new MutableLiveData<>();

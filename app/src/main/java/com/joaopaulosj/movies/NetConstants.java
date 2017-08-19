@@ -7,7 +7,7 @@ package com.joaopaulosj.movies;
 public class NetConstants {
 
     public final static String API_URL = "https://api.themoviedb.org/3/";
-    public final static String API_KEY = "c7b5b54bdc0e35dde9ede65bc2dec836";
+    public final static String API_KEY = "34504097b300252b88f4fe53751523b3";
     public final static String BASE_POSTER_URL = "http://image.tmdb.org/t/p/w300";
 
 }

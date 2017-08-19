@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.joaopaulosj.movies.BaseApplication;
 import com.joaopaulosj.movies.R;
+import com.joaopaulosj.movies.di.component.ApplicationComponent;
 import com.joaopaulosj.movies.ui.utils.DialogHelper;
 
 /**
@@ -41,6 +43,10 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
     @Override
     public LifecycleRegistry getLifecycle() {
         return mLifecyleRegistry;
+    }
+
+    protected ApplicationComponent applicationComponent(){
+        return ((BaseApplication)getApplication()).getComponent();
     }
 
     public void setActionBar(String title, boolean displayHomeAsUpEnabled) {

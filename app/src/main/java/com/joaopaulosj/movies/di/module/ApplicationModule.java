@@ -3,10 +3,19 @@ package com.joaopaulosj.movies.di.module;
 import android.app.Application;
 import android.content.Context;
 
-import com.joaopaulosj.movies.di.ApplicationContext;
+import com.joaopaulosj.movies.NetConstants;
+import com.joaopaulosj.movies.data.remote.MoviesProvider;
+import com.joaopaulosj.movies.data.remote.MoviesService;
+import com.joaopaulosj.movies.data.repository.MovieRepository;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by jpsja_000 on 18/08/2017.
@@ -22,14 +31,28 @@ public class ApplicationModule {
     }
 
     @Provides
-    Application provideApplication() {
-        return mApplication;
+    @Singleton
+    MoviesService provideMoviesService(){
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .build();
+
+        return new Retrofit.Builder()
+                .baseUrl(NetConstants.API_URL)
+                .client(httpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(MoviesService.class);
     }
 
     @Provides
-    @ApplicationContext
-    Context provideContext() {
-        return mApplication;
+    MoviesProvider provideMoviesProvider(MoviesService moviesService){
+        return new MoviesProvider(moviesService);
+    }
+
+    @Provides
+    @Singleton
+    MovieRepository provideMovieRepository(MoviesProvider moviesProvider){
+        return new MovieRepository(moviesProvider);
     }
 
 }

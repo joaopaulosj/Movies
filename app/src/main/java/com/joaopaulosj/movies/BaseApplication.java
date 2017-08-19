@@ -8,7 +8,7 @@ import com.joaopaulosj.movies.di.component.DaggerApplicationComponent;
 import com.joaopaulosj.movies.di.module.ApplicationModule;
 
 /**
- * Created by jpsja_000 on 18/08/2017.
+ * Created by jpsja_000 on 19/08/2017.
  */
 
 public class BaseApplication extends Application {
@@ -22,7 +22,6 @@ public class BaseApplication extends Application {
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
-        mApplicationComponent.inject(this);
     }
 
     public static BaseApplication get(Context context) {

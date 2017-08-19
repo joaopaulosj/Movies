@@ -20,11 +20,11 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        applicationComponent().inject(this);
 
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         setAdapter();
-
         displayPopularMovies();
     }
 
@@ -35,8 +35,10 @@ public class MainActivity extends BaseActivity {
     void displayPopularMovies(){
         mViewModel.getPopularMovies(1).observe(this, new Observer<MoviesResponse<Movie>>() {
             @Override
-            public void onChanged(@Nullable MoviesResponse<Movie> movieMoviesResponse) {
-
+            public void onChanged(@Nullable MoviesResponse<Movie> moviesResponse) {
+                if(moviesResponse != null) {
+                    showToast("movies: " + moviesResponse.getMovies().size());
+                }
             }
         });
     }

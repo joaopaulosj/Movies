@@ -19,4 +19,37 @@ public class MoviesResponse<T> {
     @SerializedName("page")
     private int page;
 
+    private String error;
+
+    public List<T> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<T> movies) {
+        this.movies = movies;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }

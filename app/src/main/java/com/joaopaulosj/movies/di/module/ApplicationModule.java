@@ -3,7 +3,6 @@ package com.joaopaulosj.movies.di.module;
 import android.app.Application;
 
 import com.joaopaulosj.movies.NetConstants;
-import com.joaopaulosj.movies.data.remote.MoviesProvider;
 import com.joaopaulosj.movies.data.remote.MoviesService;
 import com.joaopaulosj.movies.data.repository.MovieRepositoryImpl;
 
@@ -43,14 +42,9 @@ public class ApplicationModule {
     }
 
     @Provides
-    MoviesProvider provideMoviesProvider(MoviesService moviesService){
-        return new MoviesProvider(moviesService);
-    }
-
-    @Provides
     @Singleton
-    MovieRepositoryImpl provideMovieRepository(MoviesProvider moviesProvider){
-        return new MovieRepositoryImpl(moviesProvider);
+    MovieRepositoryImpl provideMovieRepository(MoviesService moviesService){
+        return new MovieRepositoryImpl(moviesService);
     }
 
 }

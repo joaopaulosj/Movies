@@ -29,9 +29,16 @@ public class MainViewModel extends AndroidViewModel {
         BaseApplication.get(application).getComponent().inject(this);
     }
 
-    public LiveData<MoviesResponse<Movie>> getPopularMovies(int page){
-            mPopularMovies = mRepository.getPopularMovies(page);
+    public void resetPopularMovies() {
+        mRepository.loadPopularMovies(1);
+    }
 
-            return mPopularMovies;
+    public void loadMorePopularMovies(int page) {
+        mRepository.loadPopularMovies(page);
+    }
+
+    public LiveData<MoviesResponse<Movie>> getPopularMovies() {
+        mPopularMovies = mRepository.getPopularMovies();
+        return mPopularMovies;
     }
 }

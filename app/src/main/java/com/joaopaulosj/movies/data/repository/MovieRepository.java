@@ -11,7 +11,7 @@ import com.joaopaulosj.movies.data.models.MoviesResponse;
 
 public interface MovieRepository {
 
-    public LiveData<MoviesResponse<Movie>> getPopularMovies(int page);
+    public void loadPopularMovies(int page);
 
     public LiveData<MoviesResponse<Movie>> searchMovie(String search, int page);
 

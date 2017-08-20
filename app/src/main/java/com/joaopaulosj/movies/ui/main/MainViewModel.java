@@ -23,6 +23,7 @@ public class MainViewModel extends AndroidViewModel {
 
     private LiveData<MoviesResponse<Movie>> mPopularMovies = new MutableLiveData<>();
     private LiveData<MoviesResponse<Movie>> mSearchMovies = new MutableLiveData<>();
+    private String mQuery = "";
 
     public MainViewModel(Application application) {
         super(application);
@@ -39,6 +40,24 @@ public class MainViewModel extends AndroidViewModel {
 
     public LiveData<MoviesResponse<Movie>> getPopularMovies() {
         mPopularMovies = mRepository.getPopularMovies();
+        return mPopularMovies;
+    }
+
+    public void setQuery(String query){
+        mQuery = query;
+        resetSearchMovies();
+    }
+
+    public void resetSearchMovies() {
+        mRepository.loadSearchMovies(mQuery, 1);
+    }
+
+    public void loadMoreSearchMovies(int page) {
+        mRepository.loadSearchMovies(mQuery, page);
+    }
+
+    public LiveData<MoviesResponse<Movie>> getSearchMovies() {
+        mPopularMovies = mRepository.getSearchMovies();
         return mPopularMovies;
     }
 }

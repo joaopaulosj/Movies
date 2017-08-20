@@ -23,6 +23,7 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     private MoviesService mService;
     private MutableLiveData<MoviesResponse<Movie>> mPopularMovies = new MutableLiveData<>();
+    private MutableLiveData<MoviesResponse<Movie>> mSearchMovies = new MutableLiveData<>();
 
     @Inject
     public MovieRepositoryImpl(MoviesService mService) {
@@ -50,9 +51,25 @@ public class MovieRepositoryImpl implements MovieRepository {
         return mPopularMovies;
     }
 
-    public LiveData<MoviesResponse<Movie>> searchMovie(String search, int page) {
-        mService.searchMovie(NetConstants.API_KEY, search, page);
-        return new MutableLiveData<>();
+    @Override
+    public void loadSearchMovies(String search, int page) {
+        mService.searchMovie(NetConstants.API_KEY, search, page).enqueue(new Callback<MoviesResponse<Movie>>() {
+            @Override
+            public void onResponse(Call<MoviesResponse<Movie>> call, Response<MoviesResponse<Movie>> response) {
+                mSearchMovies.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MoviesResponse<Movie>> call, Throwable t) {
+                MoviesResponse<Movie> response = new MoviesResponse<>();
+                response.setError(t.getMessage());
+                mSearchMovies.setValue(response);
+            }
+        });
+    }
+
+    public LiveData<MoviesResponse<Movie>> getSearchMovies() {
+        return mSearchMovies;
     }
 
 }

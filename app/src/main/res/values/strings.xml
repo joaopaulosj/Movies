@@ -2,14 +2,21 @@
     <string name="app_name">Movies</string>
 
     //DIALOGS
-    <string name="progress_dialog_standard_msg">Carregando...</string>
+    <string name="progress_dialog_standard_msg">Loading...</string>
 
     //ITEM MOVIE
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a tempus leo. Vestibulum gravida neque quis urna imperdiet posuere. Aliquam at sagittis ex, at porta felis. Ut rhoncus vel libero et placerat. Sed tristique nec orci et interdum. Morbi tincidunt ultrices turpis quis aliquet. Quisque in diam in nulla efficitur tempor ut bibendum orci. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</string>
 
     //RECYCLER VIEW
-    <string name="placeholder_empty_label">A lista está vazia</string>
-    <string name="placeholder_error_label">Ocorreu um erro. Tente novamente.</string>
-    <string name="placeholder_error_button_label">Erro</string>
+    <string name="placeholder_empty_label">The list is empty</string>
+    <string name="placeholder_error_label">An error has occurred. Try again later.</string>
+    <string name="placeholder_error_button_label">Error</string>
+
+    //POPULAR
+    <string name="popular_movies_title">Popular Movies</string>
+
+    //SEARCH
+    <string name="toolbar_search">Search</string>
+    <string name="search_hint">Search movie</string>
 
 </resources>

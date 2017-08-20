@@ -2,7 +2,6 @@ package com.joaopaulosj.movies.ui;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +23,12 @@ import butterknife.ButterKnife;
  * Created by jpsja_000 on 19/08/2017.
  */
 
-public class MovieAdapter extends BaseRecyclerViewAdapter{
+public class SearchMovieAdapter extends BaseRecyclerViewAdapter{
 
     private List<Movie> mList = new ArrayList<>();
     private Activity mActivity;
 
-    public MovieAdapter(Activity mActivity) {
+    public SearchMovieAdapter(Activity mActivity) {
         this.mActivity = mActivity;
     }
 
@@ -40,12 +39,6 @@ public class MovieAdapter extends BaseRecyclerViewAdapter{
 
     public void clear() {
         mList.clear();
-        notifyDataChanged();
-    }
-
-    public void setList(List<Movie> list) {
-        mList = list;
-        notifyDataChanged();
     }
 
     @Override
@@ -55,23 +48,27 @@ public class MovieAdapter extends BaseRecyclerViewAdapter{
 
     @Override
     public void onBindRecyclerViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof MovieViewHolder) ((MovieViewHolder) holder).bind(position);
+        if (holder instanceof PopularMovieViewHolder) ((PopularMovieViewHolder) holder).bind(position);
     }
 
     @Override
     protected RecyclerView.ViewHolder getItemViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_popular_movie, parent, false);
-        return new MovieViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_movie, parent, false);
+        return new PopularMovieViewHolder(view);
     }
 
-    class MovieViewHolder extends RecyclerView.ViewHolder {
+    class PopularMovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_movie_poster_iv)
         ImageView moviePosterIv;
         @BindView(R.id.item_movie_title_tv)
         TextView movieTitleTv;
+        @BindView(R.id.item_movie_overview_tv)
+        TextView movieOverview;
+        @BindView(R.id.item_movie_year_tv)
+        TextView movieYear;
 
-        public MovieViewHolder(View itemView) {
+        public PopularMovieViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -79,7 +76,9 @@ public class MovieAdapter extends BaseRecyclerViewAdapter{
         public void bind(int position){
             Movie movie = mList.get(position);
 
-            movieTitleTv.setText(movie.title);
+            movieTitleTv.setText(movie.getTitle());
+            movieOverview.setText(movie.getOverview());
+            movieYear.setText(movie.getYear());
             Glide.with(mActivity).load(movie.getPosterUrl()).placeholder(R.color.colorAccent).into(moviePosterIv);
         }
     }

@@ -3,12 +3,15 @@ package com.joaopaulosj.movies.ui.base;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.LifecycleRegistryOwner;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.joaopaulosj.movies.BaseApplication;
@@ -30,6 +33,16 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
         super.onCreate(savedInstanceState);
     }
 
+    protected boolean onCreateOptionsMenu(Menu menu, int... idsToSetVisible) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_items, menu);
+        for (int id : idsToSetVisible) {
+            MenuItem menuItem = menu.findItem(id);
+            if (menuItem != null) menuItem.setVisible(true);
+        }
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -45,21 +58,21 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
         return mLifecyleRegistry;
     }
 
-    protected ApplicationComponent applicationComponent(){
-        return ((BaseApplication)getApplication()).getComponent();
+    protected ApplicationComponent applicationComponent() {
+        return ((BaseApplication) getApplication()).getComponent();
     }
 
-    public void setActionBar(String title, boolean displayHomeAsUpEnabled) {
+    protected void setActionBar(String title, boolean displayHomeAsUpEnabled) {
         setActionBar(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled);
     }
 
-    public void showToast(String string) {
+    protected void showToast(String string) {
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
 
     //ACTION BAR METHODS
-    public void setActionBar(String title) {
+    protected void setActionBar(String title) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(title);
@@ -77,11 +90,19 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
         }
     }
 
-    public void showProgressDialog(boolean show) {
+    protected void showProgressDialog(boolean show) {
         if (show) {
             showProgressDialog();
         } else {
             dismissProgressDialog();
+        }
+    }
+
+    protected void hideSoftKeyboard() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
         }
     }
 }

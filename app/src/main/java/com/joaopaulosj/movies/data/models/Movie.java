@@ -11,26 +11,69 @@ import com.joaopaulosj.movies.NetConstants;
 public class Movie {
 
     @SerializedName("id")
-    public String id = "";
+    private String id = "";
 
     @SerializedName("title")
-    public String title = "";
+    private String title = "";
 
     @SerializedName("overview")
-    public String overview = "";
+    private String overview = "";
 
     @SerializedName("release_date")
-    public String release = "";
+    private String release = "";
 
     @SerializedName("poster_path")
-    public String poster_url = "";
+    private String poster_url = "";
 
-    public String getPosterUrl(){
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getRelease() {
+        return release;
+    }
+
+    public void setRelease(String release) {
+        this.release = release;
+    }
+
+    public String getPoster_url() {
+        return poster_url;
+    }
+
+    public void setPoster_url(String poster_url) {
+        this.poster_url = poster_url;
+    }
+
+    public String getPosterUrl() {
         return NetConstants.BASE_POSTER_URL + poster_url;
     }
 
-    public String getYear(){
-        return release.substring(0, 4);
+    public String getYear() {
+        if (!release.isEmpty())
+            return release.substring(0, 4);
+        else
+            return release;
     }
 
 }

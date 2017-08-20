@@ -2,17 +2,21 @@ package com.joaopaulosj.movies.ui.main;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.joaopaulosj.movies.R;
 import com.joaopaulosj.movies.data.models.Movie;
 import com.joaopaulosj.movies.data.models.MoviesResponse;
-import com.joaopaulosj.movies.ui.MovieAdapter;
+import com.joaopaulosj.movies.ui.PopularMovieAdapter;
 import com.joaopaulosj.movies.ui.base.BaseActivity;
+import com.joaopaulosj.movies.ui.search.SearchActivity;
 import com.joaopaulosj.movies.ui.utils.EndlessRecyclerViewScrollListener;
 
 import butterknife.BindView;
@@ -26,7 +30,7 @@ public class MainActivity extends BaseActivity {
     SwipeRefreshLayout mSwipeRefresh;
 
     private MainViewModel mViewModel;
-    private MovieAdapter mAdapter;
+    private PopularMovieAdapter mAdapter;
     private EndlessRecyclerViewScrollListener mScrollListener;
 
     @Override
@@ -38,10 +42,24 @@ public class MainActivity extends BaseActivity {
 
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        setActionBar(getString(R.string.app_name));
+        setActionBar(getString(R.string.popular_movies_title));
         setRecyclerView();
         displayPopularMovies();
         setSwipeRefreshLayout();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu, R.id.menu_action_search);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_action_search) {
+            startActivity(new Intent(this, SearchActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setSwipeRefreshLayout() {
@@ -59,7 +77,7 @@ public class MainActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new MovieAdapter(this);
+        mAdapter = new PopularMovieAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override

@@ -1,4 +1,4 @@
-package com.joaopaulosj.movies.ui;
+package com.joaopaulosj.movies.ui.search;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -23,12 +23,12 @@ import butterknife.ButterKnife;
  * Created by jpsja_000 on 19/08/2017.
  */
 
-public class PopularMovieAdapter extends BaseRecyclerViewAdapter{
+public class SearchMovieAdapter extends BaseRecyclerViewAdapter{
 
     private List<Movie> mList = new ArrayList<>();
     private Activity mActivity;
 
-    public PopularMovieAdapter(Activity mActivity) {
+    public SearchMovieAdapter(Activity mActivity) {
         this.mActivity = mActivity;
     }
 
@@ -39,7 +39,6 @@ public class PopularMovieAdapter extends BaseRecyclerViewAdapter{
 
     public void clear() {
         mList.clear();
-        notifyDataChanged();
     }
 
     @Override
@@ -54,7 +53,7 @@ public class PopularMovieAdapter extends BaseRecyclerViewAdapter{
 
     @Override
     protected RecyclerView.ViewHolder getItemViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_popular_movie, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_movie, parent, false);
         return new PopularMovieViewHolder(view);
     }
 
@@ -64,6 +63,10 @@ public class PopularMovieAdapter extends BaseRecyclerViewAdapter{
         ImageView moviePosterIv;
         @BindView(R.id.item_movie_title_tv)
         TextView movieTitleTv;
+        @BindView(R.id.item_movie_overview_tv)
+        TextView movieOverview;
+        @BindView(R.id.item_movie_year_tv)
+        TextView movieYear;
 
         public PopularMovieViewHolder(View itemView) {
             super(itemView);
@@ -73,8 +76,9 @@ public class PopularMovieAdapter extends BaseRecyclerViewAdapter{
         public void bind(int position){
             Movie movie = mList.get(position);
 
-            String pos = "#" + (position + 1);
-            movieTitleTv.setText(pos + " - " + movie.getTitle());
+            movieTitleTv.setText(movie.getTitle());
+            movieOverview.setText(movie.getOverview());
+            movieYear.setText(movie.getYear());
             Glide.with(mActivity).load(movie.getPosterUrl()).placeholder(R.color.colorAccent).into(moviePosterIv);
         }
     }

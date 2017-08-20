@@ -11,16 +11,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.joaopaulosj.movies.R;
 import com.joaopaulosj.movies.data.models.Movie;
 import com.joaopaulosj.movies.data.models.MoviesResponse;
-import com.joaopaulosj.movies.ui.SearchMovieAdapter;
 import com.joaopaulosj.movies.ui.base.BaseActivity;
-import com.joaopaulosj.movies.ui.main.MainViewModel;
+import com.joaopaulosj.movies.ui.MoviesViewModel;
 import com.joaopaulosj.movies.ui.utils.EndlessRecyclerViewScrollListener;
+
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +36,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
 
-    private MainViewModel mViewModel;
+    private MoviesViewModel mViewModel;
     private SearchMovieAdapter mAdapter;
     private EndlessRecyclerViewScrollListener mScrollListener;
 
@@ -49,7 +51,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
         displaySearchMovies();
         setRecyclerView();
         setSwipeRefresh();
@@ -78,22 +80,23 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if (!newText.isEmpty())
-            searchMovie(newText);
+        searchMovie(newText);
 
         return false;
     }
 
-    private void setSwipeRefresh(){
+    private void setSwipeRefresh() {
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mAdapter.clear();
                 mViewModel.resetSearchMovies();
             }
         });
     }
 
     private void searchMovie(String query) {
+        mSwipeRefresh.setRefreshing(true);
         mAdapter.clear();
         mViewModel.setQuery(query);
     }
@@ -123,7 +126,7 @@ public class SearchActivity extends BaseActivity implements SearchView.OnQueryTe
                 if (moviesResponse != null) {
                     if (moviesResponse.getError() != null)
                         showToast(moviesResponse.getError());
-                    else if (moviesResponse.getMovies().size() > 0)
+                    else
                         mAdapter.addItems(moviesResponse.getMovies());
                 }
             }

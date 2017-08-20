@@ -1,8 +1,7 @@
 package com.joaopaulosj.movies.data.models;
 
 import com.google.gson.annotations.SerializedName;
-import com.joaopaulosj.movies.Constants;
-import com.joaopaulosj.movies.NetConstants;
+import com.joaopaulosj.movies.data.NetConstants;
 
 /**
  * Created by jpsja_000 on 19/08/2017.

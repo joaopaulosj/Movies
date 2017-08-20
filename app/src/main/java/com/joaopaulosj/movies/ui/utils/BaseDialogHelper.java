@@ -29,30 +29,8 @@ public class BaseDialogHelper {
         return progressDialog;
     }
 
-    public static AlertDialog createDisclaimerDialog(Context context, String title, String msg, String positiveText, DialogInterface.OnClickListener listener) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context).setMessage(msg).setTitle(title).setPositiveButton(positiveText, listener).setCancelable(false);
-        return alertDialogBuilder.create();
-    }
-
-    public static AlertDialog createAlertDialog(Context context, String msg, String positiveText, String negativeText, DialogInterface.OnClickListener positiveButtonListener) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context).setMessage(msg).setPositiveButton(positiveText, positiveButtonListener)
-                .setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-        return alertDialogBuilder.create();
-    }
-
-    public static AlertDialog createAlertDialog(Context context, String msg, String positiveText, String negativeText, DialogInterface.OnClickListener postiveButtonListener, DialogInterface.OnClickListener negativeButtonListener) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context).setMessage(msg).setPositiveButton(positiveText, postiveButtonListener)
-                .setNegativeButton(negativeText, negativeButtonListener);
-        return alertDialogBuilder.create();
-    }
-
     public static AlertDialog createSimpleDialog(Context context, String msg) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context).setMessage(msg)
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context, R.style.DialogTheme).setMessage(msg)
                 .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

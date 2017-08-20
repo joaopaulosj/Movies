@@ -1,4 +1,4 @@
-package com.joaopaulosj.movies.ui;
+package com.joaopaulosj.movies.ui.popular;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -23,22 +23,13 @@ import butterknife.ButterKnife;
  * Created by jpsja_000 on 19/08/2017.
  */
 
-public class SearchMovieAdapter extends BaseRecyclerViewAdapter{
+public class PopularMovieAdapter extends BaseRecyclerViewAdapter{
 
     private List<Movie> mList = new ArrayList<>();
     private Activity mActivity;
 
-    public SearchMovieAdapter(Activity mActivity) {
+    public PopularMovieAdapter(Activity mActivity) {
         this.mActivity = mActivity;
-    }
-
-    public void addItems(List<Movie> list) {
-        mList.addAll(list);
-        notifyDataChanged();
-    }
-
-    public void clear() {
-        mList.clear();
     }
 
     @Override
@@ -53,8 +44,17 @@ public class SearchMovieAdapter extends BaseRecyclerViewAdapter{
 
     @Override
     protected RecyclerView.ViewHolder getItemViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_movie, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_popular_movie, parent, false);
         return new PopularMovieViewHolder(view);
+    }
+
+    public void addItems(List<Movie> list) {
+        mList.addAll(list);
+        notifyDataChanged();
+    }
+
+    public void clear() {
+        mList.clear();
     }
 
     class PopularMovieViewHolder extends RecyclerView.ViewHolder {
@@ -63,10 +63,6 @@ public class SearchMovieAdapter extends BaseRecyclerViewAdapter{
         ImageView moviePosterIv;
         @BindView(R.id.item_movie_title_tv)
         TextView movieTitleTv;
-        @BindView(R.id.item_movie_overview_tv)
-        TextView movieOverview;
-        @BindView(R.id.item_movie_year_tv)
-        TextView movieYear;
 
         public PopularMovieViewHolder(View itemView) {
             super(itemView);
@@ -76,9 +72,8 @@ public class SearchMovieAdapter extends BaseRecyclerViewAdapter{
         public void bind(int position){
             Movie movie = mList.get(position);
 
-            movieTitleTv.setText(movie.getTitle());
-            movieOverview.setText(movie.getOverview());
-            movieYear.setText(movie.getYear());
+            String pos = "#" + (position + 1);
+            movieTitleTv.setText(pos + " - " + movie.getTitle());
             Glide.with(mActivity).load(movie.getPosterUrl()).placeholder(R.color.colorAccent).into(moviePosterIv);
         }
     }

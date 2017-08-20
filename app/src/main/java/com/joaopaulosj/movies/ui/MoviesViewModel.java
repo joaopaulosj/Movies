@@ -1,4 +1,4 @@
-package com.joaopaulosj.movies.ui.main;
+package com.joaopaulosj.movies.ui;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * Created by jpsja_000 on 19/08/2017.
  */
 
-public class MainViewModel extends AndroidViewModel {
+public class MoviesViewModel extends AndroidViewModel {
 
     @Inject
     MovieRepositoryImpl mRepository;
@@ -25,7 +25,7 @@ public class MainViewModel extends AndroidViewModel {
     private LiveData<MoviesResponse<Movie>> mSearchMovies = new MutableLiveData<>();
     private String mQuery = "";
 
-    public MainViewModel(Application application) {
+    public MoviesViewModel(Application application) {
         super(application);
         BaseApplication.get(application).getComponent().inject(this);
     }
@@ -39,7 +39,7 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public LiveData<MoviesResponse<Movie>> getPopularMovies() {
-        mPopularMovies = mRepository.getPopularMovies();
+        mPopularMovies = mRepository.initPopularMovies();
         return mPopularMovies;
     }
 
@@ -57,7 +57,7 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public LiveData<MoviesResponse<Movie>> getSearchMovies() {
-        mPopularMovies = mRepository.getSearchMovies();
+        mPopularMovies = mRepository.initSearchMovies();
         return mPopularMovies;
     }
 }

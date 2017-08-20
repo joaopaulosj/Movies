@@ -2,8 +2,9 @@ package com.joaopaulosj.movies.data.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.util.Log;
 
-import com.joaopaulosj.movies.NetConstants;
+import com.joaopaulosj.movies.data.NetConstants;
 import com.joaopaulosj.movies.data.models.Movie;
 import com.joaopaulosj.movies.data.models.MoviesResponse;
 import com.joaopaulosj.movies.data.remote.MoviesService;
@@ -24,6 +25,7 @@ public class MovieRepositoryImpl implements MovieRepository {
     private MoviesService mService;
     private MutableLiveData<MoviesResponse<Movie>> mPopularMovies = new MutableLiveData<>();
     private MutableLiveData<MoviesResponse<Movie>> mSearchMovies = new MutableLiveData<>();
+    private Call searchMoviesCall;
 
     @Inject
     public MovieRepositoryImpl(MoviesService mService) {
@@ -32,7 +34,7 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public void loadPopularMovies(int page) {
-        mService.getPopularMovies(NetConstants.API_KEY, page).enqueue(new Callback<MoviesResponse<Movie>>() {
+        mService.getPopularMovies(page).enqueue(new Callback<MoviesResponse<Movie>>() {
             @Override
             public void onResponse(Call<MoviesResponse<Movie>> call, Response<MoviesResponse<Movie>> response) {
                 mPopularMovies.setValue(response.body());
@@ -47,28 +49,41 @@ public class MovieRepositoryImpl implements MovieRepository {
         });
     }
 
-    public LiveData<MoviesResponse<Movie>> getPopularMovies() {
+    public LiveData<MoviesResponse<Movie>> initPopularMovies() {
         return mPopularMovies;
     }
 
     @Override
-    public void loadSearchMovies(String search, int page) {
-        mService.searchMovie(NetConstants.API_KEY, search, page).enqueue(new Callback<MoviesResponse<Movie>>() {
+    public void loadSearchMovies(final String search, int page) {
+        Log.v("MOV", "search for: " + search);
+        if (searchMoviesCall != null) {
+            searchMoviesCall.cancel();
+            mSearchMovies.setValue(null);
+            Log.v("MOV", "search for: " + search + " canceled ---");
+        }
+
+        searchMoviesCall = mService.searchMovie(search, page);
+        searchMoviesCall.enqueue(new Callback<MoviesResponse<Movie>>() {
             @Override
             public void onResponse(Call<MoviesResponse<Movie>> call, Response<MoviesResponse<Movie>> response) {
+                if (response.body() != null)
+                    Log.v("MOV", "response for: " + search
+                            + " of size " + response.body().getMovies().size());
                 mSearchMovies.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<MoviesResponse<Movie>> call, Throwable t) {
-                MoviesResponse<Movie> response = new MoviesResponse<>();
-                response.setError(t.getMessage());
-                mSearchMovies.setValue(response);
+                if (!t.getMessage().equals("Canceled")) {
+                    MoviesResponse<Movie> response = new MoviesResponse<>();
+                    response.setError(t.getMessage());
+                    mSearchMovies.setValue(response);
+                }
             }
         });
     }
 
-    public LiveData<MoviesResponse<Movie>> getSearchMovies() {
+    public LiveData<MoviesResponse<Movie>> initSearchMovies() {
         return mSearchMovies;
     }
 

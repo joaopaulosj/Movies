@@ -53,7 +53,6 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     public BaseRecyclerViewAdapter(View.OnClickListener tryAgainClickListener, OnEndReached onEndReached) {
         mTryAgainClickListener = tryAgainClickListener;
-        mOnEndReached = onEndReached;
     }
 
     public BaseRecyclerViewAdapter() {
@@ -183,8 +182,6 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
             ((PageLoadingErrorVH) holder).bind(mTryAgainClickListener);
         }
     }
-
-
 
     public abstract int getDisplayableItemsCount();
 

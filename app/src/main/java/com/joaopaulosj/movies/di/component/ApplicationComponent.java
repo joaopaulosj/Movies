@@ -1,12 +1,8 @@
 package com.joaopaulosj.movies.di.component;
 
-import android.app.Application;
-import android.content.Context;
-
-import com.joaopaulosj.movies.BaseApplication;
 import com.joaopaulosj.movies.di.module.ApplicationModule;
-import com.joaopaulosj.movies.ui.main.MainActivity;
-import com.joaopaulosj.movies.ui.main.MainViewModel;
+import com.joaopaulosj.movies.ui.popular.MainActivity;
+import com.joaopaulosj.movies.ui.MoviesViewModel;
 
 import javax.inject.Singleton;
 
@@ -21,6 +17,6 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     void inject(MainActivity mainActivity);
-    void inject(MainViewModel mainViewModel);
+    void inject(MoviesViewModel moviesViewModel);
 
 }

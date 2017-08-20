@@ -26,7 +26,6 @@ import com.joaopaulosj.movies.ui.utils.DialogHelper;
 public class BaseActivity extends AppCompatActivity implements LifecycleRegistryOwner {
 
     private LifecycleRegistry mLifecyleRegistry = new LifecycleRegistry(this);
-    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,40 +61,14 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
         return ((BaseApplication) getApplication()).getComponent();
     }
 
-    protected void setActionBar(String title, boolean displayHomeAsUpEnabled) {
-        setActionBar(title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled);
-    }
-
     protected void showToast(String string) {
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
 
-    //ACTION BAR METHODS
     protected void setActionBar(String title) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(title);
-    }
-
-    //PROGRESS DIALOG METHODS
-    private void showProgressDialog() {
-        mProgressDialog = (mProgressDialog == null) ? DialogHelper.createProgressDialog(this) : mProgressDialog;
-        mProgressDialog.show();
-    }
-
-    private void dismissProgressDialog() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
-    }
-
-    protected void showProgressDialog(boolean show) {
-        if (show) {
-            showProgressDialog();
-        } else {
-            dismissProgressDialog();
-        }
     }
 
     protected void hideSoftKeyboard() {

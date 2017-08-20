@@ -1,4 +1,4 @@
-package com.joaopaulosj.movies;
+package com.joaopaulosj.movies.data;
 
 /**
  * Created by jpsja_000 on 19/08/2017.

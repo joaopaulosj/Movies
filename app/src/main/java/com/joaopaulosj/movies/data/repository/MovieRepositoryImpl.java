@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
-import com.joaopaulosj.movies.data.NetConstants;
 import com.joaopaulosj.movies.data.models.Movie;
 import com.joaopaulosj.movies.data.models.MoviesResponse;
 import com.joaopaulosj.movies.data.remote.MoviesService;
@@ -55,11 +54,9 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public void loadSearchMovies(final String search, int page) {
-        Log.v("MOV", "search for: " + search);
         if (searchMoviesCall != null) {
             searchMoviesCall.cancel();
             mSearchMovies.setValue(null);
-            Log.v("MOV", "search for: " + search + " canceled ---");
         }
 
         searchMoviesCall = mService.searchMovie(search, page);

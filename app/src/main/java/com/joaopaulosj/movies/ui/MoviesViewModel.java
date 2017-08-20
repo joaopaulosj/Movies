@@ -21,8 +21,6 @@ public class MoviesViewModel extends AndroidViewModel {
     @Inject
     MovieRepositoryImpl mRepository;
 
-    private LiveData<MoviesResponse<Movie>> mPopularMovies = new MutableLiveData<>();
-    private LiveData<MoviesResponse<Movie>> mSearchMovies = new MutableLiveData<>();
     private String mQuery = "";
 
     public MoviesViewModel(Application application) {
@@ -39,8 +37,7 @@ public class MoviesViewModel extends AndroidViewModel {
     }
 
     public LiveData<MoviesResponse<Movie>> getPopularMovies() {
-        mPopularMovies = mRepository.initPopularMovies();
-        return mPopularMovies;
+        return mRepository.initPopularMovies();
     }
 
     public void setQuery(String query){
@@ -57,7 +54,6 @@ public class MoviesViewModel extends AndroidViewModel {
     }
 
     public LiveData<MoviesResponse<Movie>> getSearchMovies() {
-        mPopularMovies = mRepository.initSearchMovies();
-        return mPopularMovies;
+        return mRepository.initSearchMovies();
     }
 }

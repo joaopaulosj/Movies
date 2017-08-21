@@ -1,10 +1,8 @@
 package com.joaopaulosj.movies.ui.base;
 
-import android.app.ProgressDialog;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 import com.joaopaulosj.movies.BaseApplication;
 import com.joaopaulosj.movies.R;
 import com.joaopaulosj.movies.di.component.ApplicationComponent;
-import com.joaopaulosj.movies.ui.utils.DialogHelper;
 
 /**
  * Created by jpsja_000 on 19/08/2017.
@@ -66,7 +63,7 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
     }
 
     protected void setActionBar(String title) {
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(title);
     }
